@@ -6,6 +6,8 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
+
+from etl.test import print_context
 # These args will get passed on to each operator
 # You can override them on a per-task basis during operator initialization
 default_args = {
@@ -76,12 +78,6 @@ t3 = BashOperator(
     params={'my_param': 'Parameter I passed in'},
     dag=dag,
 )
-
-def print_context(ds, **kwargs):
-    pprint(kwargs)
-    print(ds)
-    return 'Whatever you return gets printed in the logs'
-
 
 t4 = PythonOperator(
     task_id='print_the_context',
